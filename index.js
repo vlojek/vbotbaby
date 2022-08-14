@@ -39,6 +39,7 @@ const getAuth = async () => {
 };
 
 // Use Spotify Recommended:
+// Atributes Info: https://ahsieh53632.github.io/music-attributes-and-popularity/
 const getAudioFeatures_Track = async (energy) => {
   const access_token = await getAuth();
   console.log('Access Token: ' + access_token);
@@ -73,6 +74,9 @@ const tweet = async () => {
     );
     const temp = data.main.temp;
     const weather = data.weather[0].description;
+    // Weather calc valence
+
+    //
     const time = new Date(data.dt * 1000).toLocaleTimeString('de-DE', {
       hour: '2-digit',
       minute: '2-digit',
@@ -101,7 +105,6 @@ const tweet = async () => {
       recommendedTrack,
       recommendedUrl
     );
-
     // Define tweet content:
     await rwClient.v2.tweet(
       randomSkz +
@@ -127,7 +130,7 @@ const tweet = async () => {
 tweet();
 
 // Cron job:
-const job = new CronJob('0,15,30, 35, 45 * * * *', () => {
+const job = new CronJob('0,15,30,45,55 * * * *', () => {
   console.log('Cron job starting!');
   tweet();
 });
