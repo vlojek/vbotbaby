@@ -3,7 +3,7 @@ const CronJob = require('cron').CronJob;
 const axios = require('axios');
 const qs = require('qs');
 
-// Run Cron Job for scheduled runs:
+// Run Cron Job for scheduled runs. Guide: https://crontab.guru/#0,30_*_*_*_*
 const cronJob = new CronJob('0,30 * * * *', () => {
   console.log('CronJob starting!');
   tweet();
@@ -104,11 +104,14 @@ const tweet = async () => {
     const countryInfo = await axios(
       'http://worldtimeapi.org/api/timezone/Europe/Berlin'
     );
-    const time = new Date(countryInfo.data.unixtime * 1000).toLocaleTimeString(
+    let date = new Date(countryInfo.data.unixtime).getTime();
+    console.log('date: ' + date);
+    let time = new Date(countryInfo.data.unixtime * 1000).toLocaleTimeString(
       'de-DE',
       {
         hour: '2-digit',
         minute: '2-digit',
+        timeZone: 'CET', // Force Berlin time from UNIX for Heroku
       }
     );
     const currentHours = new Date(countryInfo.data.unixtime * 1000).getHours();
