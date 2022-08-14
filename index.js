@@ -125,30 +125,14 @@ const tweet = async () => {
     const recommendedTrack = recommended.tracks[0].name;
     const recommendedUrl = recommended.tracks[0].external_urls.spotify;
     console.log(
-      'Artist Output: ' + recommendedArtist,
-      recommendedTrack,
-      recommendedUrl
+      `Artist Output: ${recommendedArtist}, ${recommendedTrack}, ${recommendedUrl}.`
     );
 
     // Define tweet content:
     await rwClient.v2.tweet(
-      'It is ' +
-        time +
-        ', and the weather is a dose of ' +
-        weather +
-        ' at ' +
-        temp +
-        '°C. Based on that (Energy: ' +
-        energy +
-        ', Valence: ' +
-        valence +
-        '), I think you might like: ' +
-        recommendedTrack +
-        ' by ' +
-        recommendedArtist +
-        '. Here is a link! ' +
-        recommendedUrl +
-        '.'
+      `It's ${time}, and the weather is a dose of ${weather} at ${temp}°C. ` +
+        `Based on that (Energy: ${energy}, Valence: ${valence}, I think you might like: ` +
+        ` ${recommendedTrack} by ${recommendedArtist}. Here is a link! ${recommendedUrl}.`
     );
     console.log('Tweet Tweet');
   } catch (error) {
